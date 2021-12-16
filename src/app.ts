@@ -2,7 +2,7 @@ import "./setup";
 import { Request, Response } from "express"
 import express from "express";
 import cors from "cors";
-import "reflect-metadata";
+import serverMiddlewareError from "./middlewares/serverMiddlewareError";
 
 import connectDatabase from "./database";
 import * as examsController from "./controllers/examsController";
@@ -17,6 +17,8 @@ app.get("/users", (req: Request, res: Response)=>{
 app.get("/exams/:id", examsController.findExamById);
 app.get("/exams/teacher/:id", examsController.findAllExamsByTeacherId);
 app.get("/exams/subject/:id", examsController.findAllExamsBySubjectId);
+
+app.use(serverMiddlewareError)
 
 export async function init () {
   await connectDatabase();
