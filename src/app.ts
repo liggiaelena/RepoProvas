@@ -1,5 +1,5 @@
 import "./setup";
-
+import { Request, Response } from "express"
 import express from "express";
 import cors from "cors";
 import "reflect-metadata";
@@ -12,7 +12,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/users", userController.getUsers);
+app.get("/users", (req: Request, res: Response)=>{
+  res.send("oi")
+});
 
 export async function init () {
   await connectDatabase();
