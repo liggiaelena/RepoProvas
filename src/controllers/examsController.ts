@@ -30,7 +30,7 @@ async function findAllExamsByTeacherId(req: Request, res: Response, next: NextFu
     const result = await examsService.getAllExamsByTeachersId(Number(id));
     res.status(200).send(result);
   } catch (error) {
-    if(error.name === 'NotFoundError' || error.name === 'NoExisError') {
+    if(error.name === 'NotFoundError' || error.name === 'NoExistError') {
       return res.status(404).send(error.message)
     }
     if(error.name === 'BadRequestError') {
@@ -49,7 +49,7 @@ async function findAllExamsBySubjectId(req: Request, res: Response, next: NextFu
     const result = await examsService.getAllExamsBySubjectId(Number(id));
     res.status(200).send(result);
   } catch (error) {
-    if(error.name === 'NotFoundError' || error.name === 'NoExisError') {
+    if(error.name === 'NotFoundError' || error.name === 'NoExistError') {
       return res.status(404).send(error.message)
     }
     if(error.name === 'BadRequestError') {

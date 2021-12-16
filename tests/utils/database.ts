@@ -6,7 +6,6 @@ import Category from "../../src/entities/Category";
 import Exam from "../../src/entities/Exam";
 
 export async function clearDatabase () {
-  console.log("entrei")
   await getRepository(Exam).delete({});
   await getRepository(Teacher).delete({});
   await getRepository(Subject).delete({});
