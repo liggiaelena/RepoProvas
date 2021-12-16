@@ -5,8 +5,7 @@ import cors from "cors";
 import "reflect-metadata";
 
 import connectDatabase from "./database";
-
-import * as userController from "./controllers/userConroller";
+import * as examsController from "./controllers/examsController";
 
 const app = express();
 app.use(cors());
@@ -15,6 +14,9 @@ app.use(express.json());
 app.get("/users", (req: Request, res: Response)=>{
   res.send("oi")
 });
+app.get("/exams/:id", examsController.findExamById);
+app.get("/exams/teacher/:id", examsController.findAllExamsByTeacherId);
+app.get("/exams/subject/:id", examsController.findAllExamsBySubjectId);
 
 export async function init () {
   await connectDatabase();
