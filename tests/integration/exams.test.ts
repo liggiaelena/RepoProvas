@@ -29,6 +29,7 @@ describe('GET /exams', () => {
     const name = faker.name.findName();
     const link = faker.internet.url();
     await createExam(name, link);
+    
     const exam = await getRepository(Exam).find({name})
     const result = await supertest(app)
     .get(`/exams/${exam[0].id}`);
