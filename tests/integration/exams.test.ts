@@ -14,7 +14,7 @@ describe('GET /exams', () => {
         await init();
   })
   afterAll(async () => {
-    clearDatabase();
+    await clearDatabase();
     await getConnection().close();
   })
 
@@ -25,11 +25,18 @@ describe('GET /exams', () => {
     expect(result.status).toEqual(404);
   })
 
+  it('Should return 400 when id is not valid', async () => {
+    const id = "string";
+    const result = await supertest(app)
+    .get(`/exams/${id}`);
+    expect(result.status).toEqual(400);
+  })
+
   it('Should return exam when id is valid', async () => {
     const name = faker.name.findName();
     const link = faker.internet.url();
     await createExam(name, link);
-    
+
     const exam = await getRepository(Exam).find({name})
     const result = await supertest(app)
     .get(`/exams/${exam[0].id}`);
