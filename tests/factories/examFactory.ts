@@ -25,17 +25,17 @@ export async function createExam(name:string, link: string, teacherName?: string
     await createTeacher({name: teacherName || nameTeacherFake});
     const teacher = await getRepository(Teacher).find({name: teacherName || nameTeacherFake});
 
+    const nameSemester = faker.name.findName();
+    await createSemester({name: nameSemester});
+    const semester = await getRepository(Semester).find({name: nameSemester});
+
     const nameSubjectFake = faker.name.findName();
-    await createSubject({name: subjectName || nameSubjectFake});
+    await createSubject({name: subjectName || nameSubjectFake, semester: semester[0].id});
     const subject = await getRepository(Subject).find({name: subjectName ||nameSubjectFake});
 
     const nameCategory = faker.name.findName();
     await createCategory({name: nameCategory});
     const category = await getRepository(Category).find({name: nameCategory});
-
-    const nameSemester = faker.name.findName();
-    await createSemester({name: nameSemester});
-    const semester = await getRepository(Semester).find({name: nameSemester});
 
 
     const exam = {

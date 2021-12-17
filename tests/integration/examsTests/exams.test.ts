@@ -1,9 +1,9 @@
 import supertest from "supertest";
-import app, { init } from '../../src/app';
+import app, { init } from '../../../src/app';
 import { getConnection, getRepository } from "typeorm";
-import { clearDatabase } from "../utils/database";
-import { createExam } from "../factories/examFactory";
-import Exam from "../../src/entities/Exam";
+import { clearDatabase } from "../../utils/database";
+import { createExam } from "../../factories/examFactory";
+import Exam from "../../../src/entities/Exam";
 import faker from 'faker';
 
 
@@ -35,10 +35,13 @@ describe('GET /exams/:id', () => {
     const link = faker.internet.url();
     await createExam(name, link);
 
-    const exam = await getRepository(Exam).find({name})
+    const exam = await getRepository(Exam).find({
+      where: {name},
+      relations: ['teacher','subject', 'category']
+    })
     const result = await supertest(app)
     .get(`/exams/${exam[0].id}`);
     expect(result.status).toEqual(200);
-    expect(result.body.length).toBeGreaterThan(0)
+    expect(result.body).toMatchObject(exam[0])
   })
 })
