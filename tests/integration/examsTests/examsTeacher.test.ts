@@ -43,7 +43,6 @@ describe('GET /exams/teacher/:teacherId/category/:categoryId', () => {
     const exam = await getRepository(Exam).find({
       relations:['teacher','subject', 'category']
     })
-    console.log(teacher, category)
     const result = await supertest(app)
     .get(`/exams/teacher/${teacher[0].id}/category/${category[0].id}`);
     expect(result.status).toEqual(200);
