@@ -6,6 +6,7 @@ import serverMiddlewareError from "./middlewares/serverMiddlewareError";
 
 import connectDatabase from "./database";
 import * as examsController from "./controllers/examsController";
+import * as listController from "./controllers/listControllers";
 
 const app = express();
 app.use(cors());
@@ -17,6 +18,8 @@ app.get("/users", (req: Request, res: Response)=>{
 app.get("/exams/:id", examsController.findExamById);
 app.get("/exams/teacher/:id", examsController.findAllExamsByTeacherId);
 app.get("/exams/subject/:id", examsController.findAllExamsBySubjectId);
+
+app.get("/list/teachers", listController.listTeachers);
 
 app.use(serverMiddlewareError)
 
