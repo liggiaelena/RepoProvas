@@ -20,14 +20,14 @@ interface ExamCreate {
     semester: number;
 }
 
-export async function createExam(name:string, link: string, teacherName?: string) {
+export async function createExam(name:string, link: string, teacherName?: string, subjectName?:string) {
     const nameTeacherFake = faker.name.findName();
     await createTeacher({name: teacherName || nameTeacherFake});
     const teacher = await getRepository(Teacher).find({name: teacherName || nameTeacherFake});
 
-    const nameSubject = faker.name.findName();
-    await createSubject({name: nameSubject});
-    const subject = await getRepository(Subject).find({name: nameSubject});
+    const nameSubjectFake = faker.name.findName();
+    await createSubject({name: subjectName || nameSubjectFake});
+    const subject = await getRepository(Subject).find({name: subjectName ||nameSubjectFake});
 
     const nameCategory = faker.name.findName();
     await createCategory({name: nameCategory});
