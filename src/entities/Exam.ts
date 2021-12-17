@@ -15,19 +15,16 @@ export default class Exam {
   @Column()
   link: string;
 
-  @OneToOne(()=> Teacher, { eager: true })
+  @OneToOne(()=> Teacher)
   @JoinColumn({ name: 'teachers_id' })
   teacher: number;
 
-  @OneToOne(()=> Subject, { eager: true })
+  @OneToOne(()=> Subject)
   @JoinColumn({ name: 'subjects_id' })
   subject: number;
 
-  @OneToOne(()=> Category, { eager: true })
+  @OneToOne(()=> Category)
   @JoinColumn({ name: 'categories_id' })
   category: number;
 
-  @OneToOne(()=> Semester, { eager: true })
-  @JoinColumn({ name: 'semesters_id' })
-  semester: number;
 }

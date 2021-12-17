@@ -6,45 +6,50 @@ import NotFoundError from "../error/NotfoundError";
 import NoExistError from "../error/NoExistError";
 
 async function getExamById(id: number) {
-    const result = await getRepository(Exam).find({ id })
+    const result = await getRepository(Exam).find({
+        where: {id},
+        relations:['teacher','subject', 'category']
+    })
     if(result.length === 0){
         throw new NoExistError("Não existe essa prova")
     }
     return result;
 }
 
-async function getAllExamsByTeachersId(id: number) {
-    const exist = await getRepository(Teacher).find({id});
+async function getExamsByTeachersIdAndCategoryId(teacherId: number, categoryId: number) {
+    const exist = await getRepository(Teacher).find({id: teacherId});
     if(exist.length === 0){
         throw new NoExistError("Não existe esse professor")
     }
 
     const result = await getRepository(Exam).find({ 
-        where: { teacher: id}
+        where: { teacher: teacherId, category: categoryId},
+        relations:['teacher','subject', 'category']
     })
     if(result.length === 0){
-        throw new NotFoundError("Esse professor não possui provas")
+        throw new NotFoundError("Esse professor não possui provas desse tipo")
     }
     return result;
 }
 
-async function getAllExamsBySubjectId(id: number) {
-    const exist = await getRepository(Subject).find({id});
+async function getExamsBySubjectIdAndCategoryId(subjectId: number, categoryId: number) {
+    const exist = await getRepository(Subject).find({id: subjectId});
     if(exist.length === 0){
         throw new NoExistError("Não existe essa matéria")
     }
 
     const result = await getRepository(Exam).find({ 
-        where: { subject: id}
+        where: { subject: subjectId, category: categoryId},
+        relations:['teacher','subject', 'category']
     })
     if(result.length === 0){
-        throw new NotFoundError("Essa matéria não possui provas")
+        throw new NotFoundError("Essa matéria não possui provas desse tipo")
     }
     return result;
 }
 
 export{
     getExamById,
-    getAllExamsByTeachersId,
-    getAllExamsBySubjectId, 
+    getExamsByTeachersIdAndCategoryId,
+    getExamsBySubjectIdAndCategoryId,
 }

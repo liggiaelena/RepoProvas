@@ -16,10 +16,13 @@ app.get("/users", (req: Request, res: Response)=>{
   res.send("oi")
 });
 app.get("/exams/:id", examsController.findExamById);
-app.get("/exams/teacher/:id", examsController.findAllExamsByTeacherId);
-app.get("/exams/subject/:id", examsController.findAllExamsBySubjectId);
+app.get("/exams/teacher/:teacherId/category/:categoryId", examsController.findAllExamsByTeacherId);
+app.get("/exams/subject/:subjectId/category/:categoryId", examsController.findAllExamsBySubjectId);
 
 app.get("/list/teachers", listController.listTeachers);
+app.get("/list/categories", listController.listCategories);
+app.get("/list/semesters", listController.listSemester);
+app.get("/list/subjects/:semesterId", listController.listSubjectsBySemesterId);
 
 app.use(serverMiddlewareError)
 

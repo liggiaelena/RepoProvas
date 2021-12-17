@@ -9,7 +9,7 @@ async function findExamById(req: Request, res: Response, next: NextFunction) {
       throw new BadRequestError("id deve ser um numero")
     }
     const result = await examsService.getExamById(Number(id));
-    res.status(200).send(result);
+    res.status(200).send(result[0]);
   } catch (error) {
     if(error.name === 'NoExistError') {
       return res.status(404).send(error.message)
@@ -23,11 +23,11 @@ async function findExamById(req: Request, res: Response, next: NextFunction) {
 
 async function findAllExamsByTeacherId(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
-    if(!Number(id)){
+    const { teacherId, categoryId } = req.params;
+    if(!Number(teacherId) || !Number(categoryId)) {
       throw new BadRequestError("id deve ser um numero")
     }
-    const result = await examsService.getAllExamsByTeachersId(Number(id));
+    const result = await examsService.getExamsByTeachersIdAndCategoryId(Number(teacherId), Number(categoryId));
     res.status(200).send(result);
   } catch (error) {
     if(error.name === 'NotFoundError' || error.name === 'NoExistError') {
@@ -42,11 +42,11 @@ async function findAllExamsByTeacherId(req: Request, res: Response, next: NextFu
 
 async function findAllExamsBySubjectId(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
-    if(!Number(id)){
+    const { subjectId, categoryId } = req.params;
+    if(!Number(subjectId) || !Number(categoryId)){
       throw new BadRequestError("id deve ser um numero")
     }
-    const result = await examsService.getAllExamsBySubjectId(Number(id));
+    const result = await examsService.getExamsBySubjectIdAndCategoryId(Number(subjectId), Number(categoryId));
     res.status(200).send(result);
   } catch (error) {
     if(error.name === 'NotFoundError' || error.name === 'NoExistError') {
