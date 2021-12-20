@@ -66,8 +66,8 @@ async function insertExam(req: Request, res: Response, next: NextFunction) {
     if (validation.error) {
       throw new BadRequestError(validation.error.message)
     }
-  const result = await examsService.postExam(req.body)
-  res.send(result).status(201)
+     await examsService.postExam(req.body)
+    res.sendStatus(201)
     
   } catch (error) {
     if(error.name === 'NotFoundError' || error.name === 'NoExistError') {
