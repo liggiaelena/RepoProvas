@@ -6,6 +6,7 @@ import NotFoundError from "../error/NotfoundError";
 import NoExistError from "../error/NoExistError";
 import Semester from "../entities/Semester";
 import Category from "../entities/Category";
+import TeacherSubject from "../entities/TeacherSubject";
 
 async function getTeachers() {
     const result = await getRepository(Teacher).find({
@@ -56,10 +57,19 @@ async function getAllSubjectsBySemesterId(id: number) {
     return result;
 }
 
+async function getAllTeachersBySubjectId(id: number) {
+    const result = await getRepository(TeacherSubject).find({ where:{subjectId: id}});
+    if(result.length === 0){
+        throw new NotFoundError("Essa matérias nao possui professores")
+    }
+    return result;
+}
+
 export{
     getTeachers,
     getSemester,
     getCategories,
     getSubjects,
     getAllSubjectsBySemesterId,
+    getAllTeachersBySubjectId
 }

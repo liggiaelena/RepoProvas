@@ -25,6 +25,7 @@ app.get("/list/categories", listController.listCategories);
 app.get("/list/semesters", listController.listSemester);
 app.get("/list/subjects", listController.listSubjects);
 app.get("/list/subjects/:semesterId", listController.listSubjectsBySemesterId);
+app.get("/list/teachers/:subjectId", listController.listTeachersBySubjectId);
 
 app.use(serverMiddlewareError)
 
