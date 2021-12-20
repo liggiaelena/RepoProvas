@@ -23,6 +23,7 @@ app.post("/exams", examsController.insertExam)
 app.get("/list/teachers", listController.listTeachers);
 app.get("/list/categories", listController.listCategories);
 app.get("/list/semesters", listController.listSemester);
+app.get("/list/subjects", listController.listSubjects);
 app.get("/list/subjects/:semesterId", listController.listSubjectsBySemesterId);
 
 app.use(serverMiddlewareError)

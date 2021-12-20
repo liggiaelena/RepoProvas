@@ -28,9 +28,18 @@ async function getCategories() {
 }
 
 async function getSemester() {
-    const result = await getRepository(Semester).find()
+    const result = await getRepository(Subject).find()
     if(result.length === 0){
         throw new NoExistError("Não há semestres cadastrados")
+    }
+    
+    return result;
+}
+
+async function getSubjects() {
+    const result = await getRepository(Semester).find()
+    if(result.length === 0){
+        throw new NoExistError("Não há matérias cadastradas")
     }
     
     return result;
@@ -51,5 +60,6 @@ export{
     getTeachers,
     getSemester,
     getCategories,
+    getSubjects,
     getAllSubjectsBySemesterId,
 }

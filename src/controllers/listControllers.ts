@@ -38,6 +38,18 @@ async function listSemester(req: Request, res: Response, next: NextFunction) {
     }
 }
 
+async function listSubjects(req: Request, res: Response, next: NextFunction) {
+  try {
+    const result = await listService.getSubjects();
+    res.status(200).send(result);
+  } catch (error) {
+    if(error.name === 'NoExistError') {
+      return res.status(404).send(error.message)
+    }
+    next(error)
+  }
+}
+
 async function listSubjectsBySemesterId(req: Request, res: Response, next: NextFunction) {
   try {
     const { semesterId } = req.params;
@@ -61,5 +73,6 @@ export {
     listTeachers,
     listSemester,
     listCategories,
+    listSubjects,
     listSubjectsBySemesterId,
 }
