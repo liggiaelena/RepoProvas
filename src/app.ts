@@ -18,6 +18,7 @@ app.get("/users", (req: Request, res: Response)=>{
 app.get("/exams/:id", examsController.findExamById);
 app.get("/exams/teacher/:teacherId/category/:categoryId", examsController.findAllExamsByTeacherId);
 app.get("/exams/subject/:subjectId/category/:categoryId", examsController.findAllExamsBySubjectId);
+app.post("/exams", examsController.insertExam)
 
 app.get("/list/teachers", listController.listTeachers);
 app.get("/list/categories", listController.listCategories);

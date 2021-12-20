@@ -4,6 +4,7 @@ import Teacher from "../entities/Teachers";
 import Subject from "../entities/Subject";
 import NotFoundError from "../error/NotfoundError";
 import NoExistError from "../error/NoExistError";
+import ExamCreate from "../interfaces/examCreateInterface"
 
 async function getExamById(id: number) {
     const result = await getRepository(Exam).find({
@@ -48,8 +49,21 @@ async function getExamsBySubjectIdAndCategoryId(subjectId: number, categoryId: n
     return result;
 }
 
+async function postExam(body: ExamCreate) {
+    const exam = {
+        name: `${body.year}.${body.semester}`,
+        link: body.link,
+        teacher: body.teacherId,
+        subject: body.subjectId,
+        category: body.categoryId
+    }
+    const result = await getRepository(Exam).insert(exam)
+    return result.identifiers[0];
+}
+
 export{
     getExamById,
     getExamsByTeachersIdAndCategoryId,
     getExamsBySubjectIdAndCategoryId,
+    postExam,
 }

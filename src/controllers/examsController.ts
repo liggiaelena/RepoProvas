@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import BadRequestError from "../error/BadRequestError";
 import * as examsService from "../services/examService";
+import examValidation from "../validation/examSchema";
 
 async function findExamById(req: Request, res: Response, next: NextFunction) {
   try {
@@ -59,8 +60,30 @@ async function findAllExamsBySubjectId(req: Request, res: Response, next: NextFu
   }
 }
 
+async function insertExam(req: Request, res: Response, next: NextFunction) {
+  try {
+    const validation = examValidation.validate(req.body);
+    if (validation.error) {
+      throw new BadRequestError(validation.error.message)
+    }
+  const result = await examsService.postExam(req.body)
+  res.send(result).status(201)
+    
+  } catch (error) {
+    if(error.name === 'NotFoundError' || error.name === 'NoExistError') {
+      return res.status(404).send(error.message)
+    }
+    if(error.name === 'BadRequestError') {
+      return res.status(400).send(error.message)
+    }
+    next(error)
+  }
+  
+}
+
 export{
-    findExamById,
-    findAllExamsByTeacherId,
-    findAllExamsBySubjectId
+  insertExam,
+  findExamById,
+  findAllExamsByTeacherId,
+  findAllExamsBySubjectId
 }
