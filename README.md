@@ -21,6 +21,9 @@
   ## Deploy:
   Heroku: https://repoprovas-liggiaelena.herokuapp.com
   
+  ## Database:
+  ![image](https://user-images.githubusercontent.com/82846994/146831462-cb1d6869-0377-4d9a-bacd-6939316f825e.png)
+  
   ## How to run:
  
  instalar as depedencias 
